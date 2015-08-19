@@ -1,0 +1,57 @@
+mysql> delimiter $
+mysql> create trigger
+    -> customerdel
+    -> before delete
+    -> on customer
+    -> for each row
+    -> begin
+    -> delete from account
+    -> where c_id=old.c_id;
+    -> end$
+Query OK, 0 rows affected (0.13 sec)
+
+mysql> delimiter ;
+mysql> delimiter $
+mysql> create trigger
+    -> accountdel
+    -> before delete
+    -> on account
+    -> for each row
+    -> begin
+    -> delete from loan
+    -> where acc_no=old.acc_no;
+    -> end$
+Query OK, 0 rows affected (0.11 sec)
+mysql> delimiter $
+mysql> create trigger
+    -> accountdel1
+    -> before delete
+    -> on account
+    -> for each row
+    -> begin
+    -> delete from saving_account
+    -> where acc_no=old.acc_no;
+    -> end$
+Query OK, 0 rows affected (0.11 sec)
+
+mysql> delimiter ;
+mysql> delete from customer
+    -> where c_id=1;
+Query OK, 1 row affected (0.06 sec)
+
+mysql>
+
+mysql> delimiter $
+mysql> create trigger
+    -> loandel
+    -> before delete
+    -> on loan
+    -> for each row
+    -> begin
+    -> delete from payment
+    -> where loan_no=old.loan_no;
+    -> end$
+Query OK, 0 rows affected (0.16 sec)
+
+mysql> delimiter ;
+mysql>
